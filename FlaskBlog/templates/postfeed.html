@@ -1,0 +1,63 @@
+<div class="row gx-5">
+{% for post in posts.items %}
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="{{ url_for('static', filename='images/' +
+                                            post.post_image)}}" class="img-fluid justify-content-center max-width: 100%" width="1500" max-height="250"/>
+                <a href="{{ url_for('users.user_posts', username=post.author.username) }}" id="author"
+                   class="text-decoration-none">{{ post.author.username }}</a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" >{{ post.title }}</h5>
+                <p class="card-text">
+                  {{ post.content|truncate(20) }}
+                </p>
+                <small>Published {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
+                <br>
+                <br>
+                <a href="{{ url_for('posts.view_post', post_id=post.id) }}" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+          </div>
+
+
+  {% endfor %}
+  </div>
+
+      <!-- Pagination -->
+      <!-- previous page -->
+      <nav class="my-4" aria-label="...">
+        <ul class="pagination pagination-circle justify-content-center">
+          {% if posts.iter_pages.has_prev %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.home', page=page_item.prev_num) }}" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {% endif %}
+          <!-- all page numbers -->
+          {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if page_num != page_num.page %}
+          <li class="page-item"><a class="page-link" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a></li>
+              {% else %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">2 <span class="sr-only">{{ page_num }}</span></a>
+          </li>
+              {% endif %}
+            {% else %}
+          <li class="page-item"><a class="page-link" href="#">...</a></li>
+          {% endif %}
+          {% endfor %}
+          <!-- next page -->
+          {% if posts.iter_pages.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.home', page=page_num.next_num) }}">Next</a>
+          </li>
+        </ul>
+      </nav>
+{% endif %}
+
+
+
+
+

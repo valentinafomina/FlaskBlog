@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}{% endblock %} FlaskBlog</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+	<style>
+
+	body { background-color:#ddd; }
+	.blog-row {margin-top:50px; }
+	.margin_bottom30 { margin-bottom:30px; }
+	.margin_left10 {margin-left:10px; }
+	.blog-content {padding:10px; }
+	.bg-white {background-color:#fff;}
+
+
+	</style>
+
+    {% block head %} {% endblock head %}
+
+    {% block style %} {% endblock style %}
+
+
+</head>
+<body>
+
+<header>
+    <!-- Intro settings -->
+    <style>
+      #intro {
+        /* Margin to fix overlapping fixed navbar */
+        margin-top: 58px;
+      }
+      @media (max-width: 991px) {
+        #intro {
+          /* Margin to fix overlapping fixed navbar */
+          margin-top: 45px;
+        }
+      }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" target="_blank" href="https://gb.ru/">
+          <img src="https://avatars.githubusercontent.com/u/15891754?s=200&v=4" height="40" alt="" loading="lazy"
+            style="margin-top: -3px;" />
+        </a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+          aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarExample01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/" rel="nofollow"
+                target="_blank">Some page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_blank">Some page</a>
+            </li>
+          </ul>
+        </div>
+
+          <div class="align-right">
+              {% if current_user.is_authenticated %}
+            <!-- Profile -->
+              <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-white u-text-hover-palette-2-base"
+                       href="{{url_for('users.account')}}" style="padding: 10px;">
+                        Account
+              </a>
+              <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-white u-text-hover-palette-2-base"
+                       href="{{url_for('users.logout')}}" style="padding: 10px;">
+                        Logout
+              </a>
+              <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-white u-text-hover-palette-2-base"
+                       href="{{url_for('posts.new_post')}}" style="padding: 10px;">
+                        New post
+              </a>
+
+
+            {% else %}
+              <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-white u-text-hover-palette-2-base"
+                       href="{{url_for('users.login')}}" style="padding: 10px;">
+                        Sign in
+              </a>
+              <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-white u-text-hover-palette-2-base"
+                       href="{{url_for('users.register')}}" style="padding: 10px;">
+                        Register
+              </a>
+              {% endif %}
+          </div>
+
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Jumbotron -->
+    <div id="intro" class="p-5 text-center bg-light">
+      <h1 class="mb-3 h2">Flask and Bootstrap Look Gooooood Together!</h1>
+
+      {% if current_user.is_authenticated %}
+      <p class="mb-3">Welcome, {{ current_user.username }}!</p>
+      {% endif %}
+
+    </div>
+    <!-- Jumbotron -->
+  </header>
+  <!--Main Navigation-->
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+{% block content %} {% endblock content %}
+
+  <!--Footer-->
+  <footer class="bg-light text-lg-start">
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-dark" href="https://github.com/valentinafomina/">My Github</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!--Footer-->
+</body>
+</html>

@@ -1,0 +1,22 @@
+
+{% extends "layout.html" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block style %} {% endblock style %}
+
+{% block content %}
+  <!--Main layout-->
+  <main class="my-5">
+    <div class="container">
+      <!--Section: Content-->
+      <section class="text-center">
+        <h4 class="mb-5"><strong>Latest posts</strong></h4>
+
+{% include "postfeed.html" %}
+      </section>
+      <!--Section: Content-->
+    </div>
+  </main>
+  <!--Main layout-->
+{% endblock content %}
